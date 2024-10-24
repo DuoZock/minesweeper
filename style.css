@@ -1,100 +1,108 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f0f0;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4; /* Add a light background color */
 }
 
-h1 {
-    color: #333;
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    margin: 20px auto;
+}
+
+/* Twitch Section */
+.twitch-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.twitch-video, .twitch-chat {
     margin-bottom: 10px;
 }
 
-#game {
+.twitch-video iframe, .twitch-chat iframe {
+    border: none;
+}
+
+/* Game Section */
+.game-section {
+    text-align: center;
+    margin: 20px;
+    background-color: #ffffff; /* White background for game section */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.minesweeper-game {
     display: grid;
-    gap: 5px;
-    justify-content: center;
     margin: 20px auto;
+    grid-template-columns: repeat(10, 1fr); /* Example for 10 columns */
 }
 
 .cell {
     width: 30px;
     height: 30px;
-    background-color: #ccc;
+    border: 1px solid #ccc;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
+    background-color: #e0e0e0; /* Default cell color */
+    transition: background-color 0.3s; /* Smooth transition */
 }
 
 .cell:hover {
-    background-color: #ddd;
-    transform: scale(1.1);
+    background-color: #d0d0d0; /* Darker on hover */
 }
 
-.cell.mine {
-    background-color: red;
-    color: white;
+.revealed {
+    background-color: #ffffff; /* Revealed cells */
 }
 
-.cell.revealed {
-    background-color: #eee;
-    cursor: default;
-    transform: none;
-}
-
-button {
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-select {
-    margin-bottom: 20px;
-    padding: 5px;
-    font-size: 16px;
-}
-
-#timer {
-    margin: 20px 0;
-    font-size: 18px;
-    color: #333;
+.exploded {
+    background-color: #ff0000; /* Red for exploded mines */
 }
 
 #high-scores {
     margin-top: 20px;
 }
 
-#high-scores h2 {
-    color: #333;
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    transition: background-color 0.3s; /* Smooth transition */
 }
 
-#high-scores-list {
-    list-style: none;
-    padding: 0;
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }
 
-#high-scores-list li {
-    background-color: #eee;
-    margin: 5px 0;
-    padding: 5px;
-    border-radius: 4px;
-}
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-@media screen and (max-width: 600px) {
-    .cell {
-        width: 25px;
-        height: 25px;
-        font-size: 14px;
+    .twitch-video iframe, .twitch-chat iframe {
+        width: 100%;
+        height: auto;
     }
 }
