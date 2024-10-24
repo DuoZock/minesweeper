@@ -8,12 +8,35 @@
 </head>
 <body>
     <div class="container">
+        <!-- Minesweeper Game Section -->
+        <div class="game-section">
+            <h1>Minesweeper</h1>
+
+            <!-- Difficulty Selection -->
+            <div class="difficulty-selection">
+                <label for="difficulty">Choose Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <button onclick="initGame()">Start Game</button>
+            </div>
+
+            <div class="minesweeper-game" id="game"></div>
+            <div id="timer">Time: 0 seconds</div>
+            <div id="high-scores">
+                <h2>High Scores</h2>
+                <ul id="high-scores-list"></ul>
+            </div>
+        </div>
+
         <!-- Twitch Stream Embed -->
         <div class="twitch-section">
             <!-- Video Player Embed -->
             <div class="twitch-video">
                 <iframe 
-                    src="https://player.twitch.tv/?channel=duozock&parent=yourdomain.com" 
+                    src="https://player.twitch.tv/?channel=duozock&parent=duozock.github.io" 
                     frameborder="0" 
                     allowfullscreen="true" 
                     scrolling="no" 
@@ -25,24 +48,12 @@
             <!-- Chat Embed -->
             <div class="twitch-chat">
                 <iframe
-                    src="https://www.twitch.tv/embed/duozock/chat?parent=yourdomain.com"
+                    src="https://www.twitch.tv/embed/duozock/chat?parent=duozock.github.io"
                     height="500"
                     width="350"
                     frameborder="0">
                 </iframe>
             </div>
-        </div>
-
-        <!-- Minesweeper Game Section -->
-        <div class="game-section">
-            <h1>Minesweeper</h1>
-            <div class="minesweeper-game" id="game"></div>
-            <div id="timer">Time: 0 seconds</div>
-            <div id="high-scores">
-                <h2>High Scores</h2>
-                <ul id="high-scores-list"></ul>
-            </div>
-            <button onclick="initGame()">Restart Game</button>
         </div>
     </div>
 

@@ -3,35 +3,18 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* Center the content horizontally */
     align-items: center;
-    background-color: #f4f4f4; /* Add a light background color */
+    height: 100vh; /* Full height to center vertically */
+    background-color: #f4f4f4; /* Light background color */
 }
 
 .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 100%;
-    margin: 20px auto;
-}
-
-/* Twitch Section */
-.twitch-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.twitch-video, .twitch-chat {
-    margin-bottom: 10px;
-}
-
-.twitch-video iframe, .twitch-chat iframe {
-    border: none;
+    flex-direction: row; /* Row layout for Twitch and game */
+    justify-content: center; /* Center the game */
+    align-items: flex-start; /* Align items to the start */
+    width: 90%; /* Max width of the container */
 }
 
 /* Game Section */
@@ -46,21 +29,24 @@ body {
 
 .minesweeper-game {
     display: grid;
-    margin: 20px auto;
-    grid-template-columns: repeat(10, 1fr); /* Example for 10 columns */
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Mindestens 60px pro Zelle */
+    gap: 5px; /* Abstand zwischen den Zellen */
+    margin: 20px auto; /* Center the grid */
 }
 
 .cell {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #e0e0e0; /* Default cell color */
-    transition: background-color 0.3s; /* Smooth transition */
+    width: 50px; /* Breite der Zellen */
+    height: 50px; /* Höhe der Zellen */
+    border: 1px solid #999;
+    display: flex; /* Flexbox für Zentrierung */
+    align-items: center; /* Vertikale Zentrierung */
+    justify-content: center; /* Horizontale Zentrierung */
+    font-size: 24px; /* Schriftgröße */
+    cursor: pointer; /* Pointer-Cursor */
+    user-select: none; /* Textauswahl verhindern */
+    outline: none; /* Fokusrahmen entfernen */
+    background-color: #e0e0e0; /* Hintergrund für verdeckte Zellen */
+    transition: background-color 0.3s; /* Sanfter Übergang */
 }
 
 .cell:hover {
@@ -69,16 +55,24 @@ body {
 
 .revealed {
     background-color: #ffffff; /* Revealed cells */
+    color: #333; /* Dark text for revealed cells */
+    border: 1px solid #ccc; /* Lighter border for revealed cells */
 }
 
 .exploded {
     background-color: #ff0000; /* Red for exploded mines */
 }
 
+.flagged {
+    background-color: #ffd700; /* Gold for flagged cells */
+}
+
+/* High Scores Section */
 #high-scores {
     margin-top: 20px;
 }
 
+/* Button Styles */
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -94,15 +88,34 @@ button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
 
+/* Twitch Section */
+.twitch-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 40px; /* Abstand zur linken Seite */
+    flex-grow: 0; /* Nicht wachsen */
+}
+
+/* Twitch video and chat styling */
+.twitch-video, .twitch-chat {
+    margin-bottom: 10px;
+}
+
+.twitch-video iframe, .twitch-chat iframe {
+    border: none;
+}
+
 /* Media Queries for Mobile */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column;
+        flex-direction: column; /* Stack vertically on small screens */
         align-items: center;
     }
 
     .twitch-video iframe, .twitch-chat iframe {
-        width: 100%;
+        width: 100%; /* Full width on mobile */
         height: auto;
     }
 }

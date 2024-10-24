@@ -8,14 +8,34 @@ let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
 // Initialize the game
 function initGame() {
+    const difficulty = document.getElementById('difficulty').value; // Get selected difficulty
+
+    // Set width, height, and mine count based on difficulty
+    if (difficulty === 'easy') {
+        width = 8;
+        height = 8;
+        mineCount = 10;
+    } else if (difficulty === 'medium') {
+        width = 10;
+        height = 10;
+        mineCount = 20;
+    } else if (difficulty === 'hard') {
+        width = 15;
+        height = 15;
+        mineCount = 30;
+    }
+
     gameOver = false;
     timeElapsed = 0; // Reset timer
-    document.getElementById('timer').textContent = 'Time: 0 seconds';
+    document.getElementById('timer').textContent = 'Zeit: 0 Sekunden';
     document.getElementById('high-scores-list').innerHTML = ''; // Clear previous scores
     highScores = JSON.parse(localStorage.getItem('highScores')) || [];
     displayHighScores(); // Show existing high scores
     const gameContainer = document.getElementById('game');
     gameContainer.innerHTML = ''; // Clear the game grid
+
+    // Set grid template columns and rows based on width and height
+    gameContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`; // Create grid layout
 
     // Create the grid
     for (let i = 0; i < width * height; i++) {
@@ -23,6 +43,10 @@ function initGame() {
         cell.className = 'cell';
         cell.dataset.index = i; // Set data index for each cell
         cell.addEventListener('click', () => handleCellClick(cell)); // Attach click event
+        cell.addEventListener('contextmenu', (e) => {
+            e.preventDefault(); // Prevent the default context menu
+            handleRightClick(cell); // Handle right click
+        });
         gameContainer.appendChild(cell); // Append cell to the grid
     }
     placeMines(); // Randomly place mines in the grid
@@ -33,7 +57,7 @@ function initGame() {
 function startTimer() {
     timer = setInterval(() => {
         timeElapsed++; // Increment time
-        document.getElementById('timer').textContent = `Time: ${timeElapsed} seconds`; // Update display
+        document.getElementById('timer').textContent = `Zeit: ${timeElapsed} Sekunden`; // Update display
     }, 1000);
 }
 
@@ -56,64 +80,63 @@ function handleCellClick(cell) {
     cell.classList.add('revealed'); // Reveal the cell
     if (cell.classList.contains('mine')) {
         cell.classList.add('exploded'); // Show explosion effect
-        clearInterval(timer); // Stop the timer
-        gameOver = true; // Mark game as over
-        revealAllMines(); // Show all mines
-        alert('Game Over! You hit a mine.'); // Notify player
-    } else {
-        const adjacentMines = countAdjacentMines(cell); // Count adjacent mines
-        if (adjacentMines > 0) {
-            cell.textContent = adjacentMines; // Display mine count
-        } else {
-            revealAdjacentCells(cell); // Reveal adjacent cells if no adjacent mines
-        }
+        clearInterval(timer); // Stop timer
+        revealAllMines(); // Reveal all mines
+        alert('Spiel vorbei! Du hast eine Mine getroffen.'); // Game over alert
+        gameOver = true; // Set game over
+        return;
+    }
+    const neighborCount = countNeighborMines(cell); // Count neighboring mines
+    cell.textContent = neighborCount || ''; // Set the text based on neighbor count
+    if (neighborCount === 0) {
+        revealNeighbors(cell); // Reveal neighboring cells if no neighbors
     }
     if (checkWin()) {
-        clearInterval(timer); // Stop timer on win
-        alert('Congratulations! You won the game!'); // Notify player
-        addHighScore(timeElapsed); // Save time to high scores
-        revealAllMines(); // Show all mines
+        clearInterval(timer); // Stop timer
+        addHighScore(timeElapsed); // Add to high scores
+        alert('Herzlichen Glückwunsch! Du hast gewonnen!'); // Win alert
+        gameOver = true; // Set game over
     }
 }
 
-// Count adjacent mines
-function countAdjacentMines(cell) {
-    const index = parseInt(cell.dataset.index);
-    let count = 0;
-    // Check surrounding cells for mines
-    [-1, 1, -width, width, -width - 1, -width + 1, width - 1, width + 1].forEach(offset => {
-        const neighborIndex = index + offset;
-        if (neighborIndex >= 0 && neighborIndex < width * height && 
-            Math.abs((neighborIndex % width) - (index % width)) <= 1) {
-            const neighborCell = document.querySelector(`.cell[data-index='${neighborIndex}']`);
-            if (neighborCell && neighborCell.classList.contains('mine')) {
-                count++; // Increment count if mine is found
-            }
-        }
-    });
-    return count; // Return total adjacent mines
+// Handle right-click for flagging
+function handleRightClick(cell) {
+    if (gameOver || cell.classList.contains('revealed')) return; // Ignore if game is over or already revealed
+    cell.classList.toggle('flagged'); // Toggle flagged state
 }
 
-// Reveal adjacent cells recursively
-function revealAdjacentCells(cell) {
+// Count neighboring mines
+function countNeighborMines(cell) {
     const index = parseInt(cell.dataset.index);
-    // Check surrounding cells
-    [-1, 1, -width, width, -width - 1, -width + 1, width - 1, width + 1].forEach(offset => {
-        const neighborIndex = index + offset;
-        if (neighborIndex >= 0 && neighborIndex < width * height && 
-            Math.abs((neighborIndex % width) - (index % width)) <= 1) {
-            const neighborCell = document.querySelector(`.cell[data-index='${neighborIndex}']`);
-            if (neighborCell && !neighborCell.classList.contains('revealed')) {
-                handleCellClick(neighborCell); // Recursive call
-            }
+    const neighbors = [
+        index - width - 1, index - width, index - width + 1,
+        index - 1,                     index + 1,
+        index + width - 1, index + width, index + width + 1,
+    ];
+    let mineCount = 0;
+    neighbors.forEach(neighborIndex => {
+        const neighborCell = document.querySelector(`[data-index='${neighborIndex}']`);
+        if (neighborCell && neighborCell.classList.contains('mine')) {
+            mineCount++; // Count mine if present
         }
     });
+    return mineCount; // Return total mines around the cell
 }
 
-// Check if the player has won
-function checkWin() {
-    const revealedCells = document.querySelectorAll('.cell.revealed');
-    return revealedCells.length === (width * height - mineCount); // Compare revealed cells to total
+// Reveal neighboring cells
+function revealNeighbors(cell) {
+    const index = parseInt(cell.dataset.index);
+    const neighbors = [
+        index - width - 1, index - width, index - width + 1,
+        index - 1,                     index + 1,
+        index + width - 1, index + width, index + width + 1,
+    ];
+    neighbors.forEach(neighborIndex => {
+        const neighborCell = document.querySelector(`[data-index='${neighborIndex}']`);
+        if (neighborCell && !neighborCell.classList.contains('revealed')) {
+            handleCellClick(neighborCell); // Recursively reveal cells
+        }
+    });
 }
 
 // Reveal all mines
@@ -121,30 +144,35 @@ function revealAllMines() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         if (cell.classList.contains('mine')) {
-            cell.classList.add('revealed'); // Reveal all mines
+            cell.classList.add('revealed', 'exploded'); // Show mines
         }
     });
+}
+
+// Check win condition
+function checkWin() {
+    const cells = document.querySelectorAll('.cell');
+    const totalCells = cells.length;
+    const revealedCells = Array.from(cells).filter(cell => cell.classList.contains('revealed')).length;
+    return (totalCells - revealedCells) === mineCount; // Check if the remaining cells are mines
 }
 
 // Add high score
 function addHighScore(time) {
     highScores.push(time); // Add time to high scores
-    highScores.sort((a, b) => a - b); // Sort scores
-    highScores = highScores.slice(0, 5);  // Keep only top 5 scores
-    localStorage.setItem('highScores', JSON.stringify(highScores)); // Save to localStorage
-    displayHighScores(); // Update high scores display
+    highScores.sort((a, b) => a - b); // Sort high scores
+    highScores = highScores.slice(0, 5); // Keep only top 5 scores
+    localStorage.setItem('highScores', JSON.stringify(highScores)); // Store in local storage
+    displayHighScores(); // Display updated high scores
 }
 
 // Display high scores
 function displayHighScores() {
-    const highScoresList = document.getElementById('high-scores-list');
-    highScoresList.innerHTML = ''; // Clear previous scores
+    const list = document.getElementById('high-scores-list');
+    list.innerHTML = ''; // Clear previous scores
     highScores.forEach(score => {
-        const li = document.createElement('li');
-        li.textContent = `${score} seconds`; // Display each score
-        highScoresList.appendChild(li);
+        const listItem = document.createElement('li');
+        listItem.textContent = `${score} Sekunden`;
+        list.appendChild(listItem); // Append each score to the list
     });
 }
-
-// Start the game on load
-window.onload = initGame; // Initialize game when window loads
