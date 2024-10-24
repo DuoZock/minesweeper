@@ -82,7 +82,9 @@ function placeMines() {
 
 // Handle cell click
 function handleCellClick(cell) {
-    if (gameOver || cell.classList.contains('revealed')) return; // Ignore if game is over or already revealed
+    // Check if game is over or cell is revealed or flagged
+    if (gameOver || cell.classList.contains('revealed') || cell.classList.contains('flagged')) return;
+
     cell.classList.add('revealed'); // Reveal the cell
     if (cell.classList.contains('mine')) {
         cell.classList.add('exploded'); // Show explosion effect
@@ -92,11 +94,13 @@ function handleCellClick(cell) {
         gameOver = true; // Set game over
         return;
     }
+    
     const neighborCount = countNeighborMines(cell); // Count neighboring mines
     cell.textContent = neighborCount || ''; // Set the text based on neighbor count
     if (neighborCount === 0) {
         revealNeighbors(cell); // Reveal neighboring cells if no neighbors
     }
+    
     if (checkWin()) {
         clearInterval(timer); // Stop timer
         addHighScore(timeElapsed); // Add to high scores

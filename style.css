@@ -69,7 +69,7 @@ body {
 }
 
 .cell:hover {
-    background-color: #d0d0d0; /* Darker on hover */
+    background-color: #d0d0d0d2; /* Darker on hover */
 }
 
 .revealed {
@@ -83,7 +83,7 @@ body {
 }
 
 .flagged {
-    background-color: #ffd700; /* Gold for flagged cells */
+    background-color: #ffd700 !important; /* Gold for flagged cells */
     color: #333; /* Dark text for flagged cells */
     font-size: 24px; /* Size of the flag */
     text-align: center; /* Center the text */
