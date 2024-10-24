@@ -35,8 +35,8 @@ body {
 }
 
 .cell {
-    width: 50px; /* Breite der Zellen */
-    height: 50px; /* Höhe der Zellen */
+    width: 60px; /* Breite der Zellen */
+    height: 60px; /* Höhe der Zellen */
     border: 1px solid #999;
     display: flex; /* Flexbox für Zentrierung */
     align-items: center; /* Vertikale Zentrierung */
@@ -65,6 +65,14 @@ body {
 
 .flagged {
     background-color: #ffd700; /* Gold for flagged cells */
+    color: #333; /* Dark text for flagged cells */
+    font-size: 24px; /* Size of the flag */
+    text-align: center; /* Center the text */
+}
+
+.flagged::before {
+    content: '🚩'; /* Flag emoji */
+    font-size: 24px; /* Size of the flag */
 }
 
 /* High Scores Section */
