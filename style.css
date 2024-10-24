@@ -4,7 +4,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center; /* Center the content horizontally */
-    align-items: center;
+    align-items: flex-start; /* Align items to the start */
     height: 100vh; /* Full height to center vertically */
     background-color: #f4f4f4; /* Light background color */
 }
@@ -20,9 +20,9 @@ body {
 /* Game Section */
 .game-section {
     text-align: center;
-    margin: 20px;
+    margin: 20px; /* Margin around the game section */
     background-color: #ffffff; /* White background for game section */
-    padding: 20px;
+    padding: 20px; /* Padding for content */
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
@@ -32,6 +32,7 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Mindestens 60px pro Zelle */
     gap: 5px; /* Abstand zwischen den Zellen */
     margin: 20px auto; /* Center the grid */
+    margin-top: 0; /* Entferne den Abstand nach oben */
 }
 
 .cell {
@@ -103,6 +104,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     margin-left: 40px; /* Abstand zur linken Seite */
+    margin-top: 50px; /* Erhöhe diesen Wert, um es weiter nach unten zu verschieben */
     flex-grow: 0; /* Nicht wachsen */
 }
 
