@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper with Twitch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Twitch Stream Embed -->
+        <div class="twitch-section">
+            <!-- Video Player Embed -->
+            <div class="twitch-video">
+                <iframe 
+                    src="https://player.twitch.tv/?channel=duozock&parent=yourdomain.com" 
+                    frameborder="0" 
+                    allowfullscreen="true" 
+                    scrolling="no" 
+                    height="378" 
+                    width="620">
+                </iframe>
+            </div>
+
+            <!-- Chat Embed -->
+            <div class="twitch-chat">
+                <iframe
+                    src="https://www.twitch.tv/embed/duozock/chat?parent=yourdomain.com"
+                    height="500"
+                    width="350"
+                    frameborder="0">
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Minesweeper Game Section -->
+        <div class="game-section">
+            <h1>Minesweeper</h1>
+            <div class="minesweeper-game" id="game"></div>
+            <div id="timer">Time: 0 seconds</div>
+            <div id="high-scores">
+                <h2>High Scores</h2>
+                <ul id="high-scores-list"></ul>
+            </div>
+            <button onclick="initGame()">Restart Game</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
