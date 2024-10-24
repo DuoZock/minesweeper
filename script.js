@@ -8,49 +8,55 @@ let highScores = JSON.parse(localStorage.getItem('highScores')) || [];
 
 // Initialize the game
 function initGame() {
-    const difficulty = document.getElementById('difficulty').value; // Get selected difficulty
-
-    // Set width, height, and mine count based on difficulty
+    const difficulty = document.getElementById('difficulty').value; // Die ausgewählte Schwierigkeit abrufen
+    const gameContainer = document.getElementById('game');
+    
+    // Setze Breite, Höhe und Mine-Zahl basierend auf der Schwierigkeit
     if (difficulty === 'easy') {
         width = 8;
         height = 8;
         mineCount = 10;
+        gameContainer.classList.add('easy');
+        gameContainer.classList.remove('medium', 'hard');
     } else if (difficulty === 'medium') {
         width = 10;
         height = 10;
         mineCount = 20;
+        gameContainer.classList.add('medium');
+        gameContainer.classList.remove('easy', 'hard');
     } else if (difficulty === 'hard') {
         width = 15;
         height = 15;
         mineCount = 30;
+        gameContainer.classList.add('hard');
+        gameContainer.classList.remove('easy', 'medium');
     }
 
     gameOver = false;
-    timeElapsed = 0; // Reset timer
+    timeElapsed = 0; // Timer zurücksetzen
     document.getElementById('timer').textContent = 'Zeit: 0 Sekunden';
-    document.getElementById('high-scores-list').innerHTML = ''; // Clear previous scores
+    document.getElementById('high-scores-list').innerHTML = ''; // Vorherige Punktzahlen löschen
     highScores = JSON.parse(localStorage.getItem('highScores')) || [];
-    displayHighScores(); // Show existing high scores
-    const gameContainer = document.getElementById('game');
-    gameContainer.innerHTML = ''; // Clear the game grid
+    displayHighScores(); // Vorhandene Punktzahlen anzeigen
+    gameContainer.innerHTML = ''; // Das Spielgitter leeren
 
-    // Set grid template columns and rows based on width and height
-    gameContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`; // Create grid layout
+    // Das Grid-Layout erstellen
+    gameContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`; // Grid-Spalten basierend auf der Breite erstellen
 
-    // Create the grid
+    // Erstelle das Grid
     for (let i = 0; i < width * height; i++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
-        cell.dataset.index = i; // Set data index for each cell
-        cell.addEventListener('click', () => handleCellClick(cell)); // Attach click event
+        cell.dataset.index = i; // Datenindex für jede Zelle festlegen
+        cell.addEventListener('click', () => handleCellClick(cell)); // Klickevent anhängen
         cell.addEventListener('contextmenu', (e) => {
-            e.preventDefault(); // Prevent the default context menu
-            handleRightClick(cell); // Handle right click
+            e.preventDefault(); // Standard-Kontextmenü verhindern
+            handleRightClick(cell); // Rechtsklick behandeln
         });
-        gameContainer.appendChild(cell); // Append cell to the grid
+        gameContainer.appendChild(cell); // Zelle zum Grid hinzufügen
     }
-    placeMines(); // Randomly place mines in the grid
-    startTimer(); // Start the timer
+    placeMines(); // Minen im Grid zufällig platzieren
+    startTimer(); // Den Timer starten
 }
 
 // Start the timer

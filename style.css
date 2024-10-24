@@ -36,8 +36,8 @@ body {
 }
 
 .cell {
-    width: 60px; /* Breite der Zellen */
-    height: 60px; /* Höhe der Zellen */
+    width: 60px; /* Standardbreite der Zellen */
+    height: 60px; /* Standardhöhe der Zellen */
     border: 1px solid #999;
     display: flex; /* Flexbox für Zentrierung */
     align-items: center; /* Vertikale Zentrierung */
@@ -48,6 +48,24 @@ body {
     outline: none; /* Fokusrahmen entfernen */
     background-color: #e0e0e0; /* Hintergrund für verdeckte Zellen */
     transition: background-color 0.3s; /* Sanfter Übergang */
+}
+
+/* Für einfache Schwierigkeit */
+.easy .cell {
+    width: 70px; /* Breite für einfache Schwierigkeit */
+    height: 70px; /* Höhe für einfache Schwierigkeit */
+}
+
+/* Für mittlere Schwierigkeit */
+.medium .cell {
+    width: 50px; /* Breite für mittlere Schwierigkeit */
+    height: 50px; /* Höhe für mittlere Schwierigkeit */
+}
+
+/* Für schwierige Schwierigkeit */
+.hard .cell {
+    width: 40px; /* Breite für schwierige Schwierigkeit */
+    height: 40px; /* Höhe für schwierige Schwierigkeit */
 }
 
 .cell:hover {
