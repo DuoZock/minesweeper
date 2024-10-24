@@ -13,21 +13,21 @@ function initGame() {
     
     // Setze Breite, Höhe und Mine-Zahl basierend auf der Schwierigkeit
     if (difficulty === 'easy') {
-        width = 8;
-        height = 8;
+        width = 9;
+        height = 9;
         mineCount = 10;
         gameContainer.classList.add('easy');
         gameContainer.classList.remove('medium', 'hard');
     } else if (difficulty === 'medium') {
-        width = 10;
-        height = 10;
-        mineCount = 20;
+        width = 16;
+        height = 16;
+        mineCount = 40;
         gameContainer.classList.add('medium');
         gameContainer.classList.remove('easy', 'hard');
     } else if (difficulty === 'hard') {
-        width = 15;
-        height = 15;
-        mineCount = 30;
+        width = 30;
+        height = 30;
+        mineCount = 150;
         gameContainer.classList.add('hard');
         gameContainer.classList.remove('easy', 'medium');
     }

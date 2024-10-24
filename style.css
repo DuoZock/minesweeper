@@ -64,8 +64,8 @@ body {
 
 /* Für schwierige Schwierigkeit */
 .hard .cell {
-    width: 40px; /* Breite für schwierige Schwierigkeit */
-    height: 40px; /* Höhe für schwierige Schwierigkeit */
+    width: 30px; /* Breite für schwierige Schwierigkeit */
+    height: 30px; /* Höhe für schwierige Schwierigkeit */
 }
 
 .cell:hover {
