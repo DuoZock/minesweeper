@@ -29,34 +29,40 @@
                 <h2>High Scores</h2>
                 <ul id="high-scores-list"></ul>
             </div>
-        </div>
 
-        <!-- Twitch Stream Embed -->
-        <div class="twitch-section">
-            <!-- Video Player Embed -->
-            <div class="twitch-video">
-                <iframe 
-                    src="https://player.twitch.tv/?channel=duozock&parent=duozock.github.io" 
-                    frameborder="0" 
-                    allowfullscreen="true" 
-                    scrolling="no" 
-                    height="378" 
-                    width="620">
-                </iframe>
-            </div>
+            <!-- Twitch Stream Embed -->
+            <div class="twitch-section">
+                <!-- Video Player Embed -->
+                <div class="twitch-video">
+                    <iframe 
+                        src="https://player.twitch.tv/?channel=duozock&parent=duozock.github.io" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        scrolling="no" 
+                        height="378" 
+                        width="620">
+                    </iframe>
+                </div>
 
-            <!-- Chat Embed -->
-            <div class="twitch-chat">
-                <iframe
-                    src="https://www.twitch.tv/embed/duozock/chat?parent=duozock.github.io"
-                    height="500"
-                    width="350"
-                    frameborder="0">
-                </iframe>
+                <!-- Chat Embed -->
+                <div class="twitch-chat">
+                    <iframe
+                        src="https://www.twitch.tv/embed/duozock/chat?parent=duozock.github.io"
+                        height="500"
+                        width="350"
+                        frameborder="0">
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Start the game automatically when the page loads
+        window.onload = function() {
+            initGame();
+        };
+    </script>
 </body>
 </html>
